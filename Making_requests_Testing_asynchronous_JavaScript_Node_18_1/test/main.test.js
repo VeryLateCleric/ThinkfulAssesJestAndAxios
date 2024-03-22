@@ -76,7 +76,7 @@ describe("src/main.js", () => {
     });
 
     it("should make a POST request to the appropriate URL with a valid data body", async () => {
-      axios.post.mockResolvedValue({ data: body });
+      axios.post.mockImplementation(() => Promise.resolve({ data: body }));
       await create(body);
       expect(axios.post).toHaveBeenCalledWith(`${BASE_URL}/students`, body)
 
@@ -116,9 +116,9 @@ describe("src/main.js", () => {
     });
 
     it("should make a GET request to the appropriate URL", async () => {
-     axios.get.mockResolvedValue({ data: student });
-    await show(id);
-    expect(axios.get).toHaveBeenCalledWith(`${BASE_URL}/students/${id}`);
+      axios.get.mockResolvedValue({ data: student });
+      await show(id);
+      expect(axios.get).toHaveBeenCalledWith(`${BASE_URL}/students/${id}`);
     });
 
     it("should resolve with a promise containing the student data", async () => {
@@ -128,7 +128,11 @@ describe("src/main.js", () => {
     });
      
     it("should log an error to the console", async () => {
-
+      const errorMessage = 'Network Error';
+      axios.get.mockRejectedValue({ message: errorMessage });
+      const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+      await show(id);
+      expect(consoleErrorSpy).toHaveBeenCalledWith(errorMessage);
       consoleErrorSpy.mockRestore();
     });
   }); 

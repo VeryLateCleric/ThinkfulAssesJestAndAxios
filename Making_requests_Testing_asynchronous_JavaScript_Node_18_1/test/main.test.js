@@ -79,13 +79,13 @@ describe("src/main.js", () => {
       axios.post.mockResolvedValue({ data: body });
       await create(body);
       expect(axios.post).toHaveBeenCalledWith(`${BASE_URL}/students`, body)
-      // Write your solution here
-      expect(1).toBe(2);
+
     });
 
     it("should resolve with a promise containing the newly saved student", async () => {
-      // Write your solution here
-      expect(1).toBe(2);
+      axios.post.mockResolvedValue({ data: body });
+      const result = await create(body);
+      expect(result).toEqual(body)
     });
     
     it("should log an error to the console", async () => {

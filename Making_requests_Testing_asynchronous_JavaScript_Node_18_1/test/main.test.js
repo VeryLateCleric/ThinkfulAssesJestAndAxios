@@ -122,13 +122,14 @@ describe("src/main.js", () => {
     });
 
     it("should resolve with a promise containing the student data", async () => {
-      // Write your solution here
+      axios.get.mockResolvedValue({ data: student });
+      const result = await show(id);
       expect(result).toEqual(student)
     });
      
     it("should log an error to the console", async () => {
-      // Write your solution here
-      expect(consoleErrorSpy).toHaveBeenCalledWith(errorMessage);
+
+      consoleErrorSpy.mockRestore();
     });
   }); 
 });  

@@ -89,9 +89,12 @@ describe("src/main.js", () => {
     });
     
     it("should log an error to the console", async () => {
-
-      // Write your solution here
-      expect(1).toBe(2);
+      const errorMessage = 'Network Error';
+      axios.post.mockRejectedValue({ message: errorMessage });
+      const consoleError = jest.spyOn(console, 'error').mockImplementation(() => {});
+      await create({});
+      expect(consoleError).toHaveBeenCalledWith(errorMessage);
+      consoleError.mockRestore();
     });
   });
   

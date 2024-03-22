@@ -116,18 +116,19 @@ describe("src/main.js", () => {
     });
 
     it("should make a GET request to the appropriate URL", async () => {
-      // Write your solution here
-      expect(1).toBe(2);
+     axios.get.mockResolvedValue({ data: student });
+    await show(id);
+    expect(axios.get).toHaveBeenCalledWith(`${BASE_URL}/students/${id}`);
     });
 
     it("should resolve with a promise containing the student data", async () => {
       // Write your solution here
-      expect(1).toBe(2);
+      expect(result).toEqual(student)
     });
      
     it("should log an error to the console", async () => {
       // Write your solution here
-      expect(1).toBe(2);
+      expect(consoleErrorSpy).toHaveBeenCalledWith(errorMessage);
     });
   }); 
 });  

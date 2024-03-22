@@ -76,6 +76,9 @@ describe("src/main.js", () => {
     });
 
     it("should make a POST request to the appropriate URL with a valid data body", async () => {
+      axios.post.mockResolvedValue({ data: body });
+      await create(body);
+      expect(axios.post).toHaveBeenCalledWith(`${BASE_URL}/students`, body)
       // Write your solution here
       expect(1).toBe(2);
     });
@@ -86,6 +89,7 @@ describe("src/main.js", () => {
     });
     
     it("should log an error to the console", async () => {
+
       // Write your solution here
       expect(1).toBe(2);
     });
